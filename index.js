@@ -50,7 +50,7 @@ module.exports = {
 				var sites = menus[menu];
 				var	tmpMenu = ''
 
-				if(menuType == 'sort')
+				if(menuType == 'Sort')
 					sites = sortProperties(sites) // Sort sites by value alphabetically if suffix == sort
 				
 				for(var tmpSite in sites) { // for each site in this menu build menu item
@@ -89,6 +89,7 @@ function dirname(path) {
 function sortProperties(obj) {
 	// convert object into array
 	var sortable=[];
+	var dict={};
 	for(var key in obj)
 		if(obj.hasOwnProperty(key))
 			sortable.push([key, obj[key]]); // each item is an array in format [key, value]
@@ -100,5 +101,10 @@ function sortProperties(obj) {
 			y=b[1].toLowerCase();
 		return x<y ? -1 : x>y ? 1 : 0;
 	});
-	return sortable; // array in format [ [ key1, val1 ], [ key2, val2 ], ... ]
+
+
+	for(var key in sortable) {
+		dict[sortable[key][0]] = sortable[key][1]
+	}
+	return dict; // array in format [ [ key1, val1 ], [ key2, val2 ], ... ]
 }
