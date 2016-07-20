@@ -13,51 +13,72 @@ appengineDir = "./appengine/html/"
 
 module.exports = {
 	build: function() {
-		var	sites = fs.readFileSync(htmlDir+"_sites.json", 'utf8');
-			sites = JSON.parse(sites); // parse json
-			sites = sortProperties(sites) // Sort sites by value alphabetically
+		var	menus = fs.readFileSync(htmlDir+"_menu.json", 'utf8');
+			menus = JSON.parse(menus); // parse json
 
-		var layout = fs.readFileSync(htmlDir+"_layout.html", 'utf8');
-
-		for(var item in sites) {
-			var site	= sites[item][0];
-			var title	= sites[item][1];
-			console.log("Processing %s", site)
-
-			// build navigation
-			var	tmpMenu1 = '<li class="menu-item"><a class="menu-link is-primary' + (site == "index.html" ? ' is-active' : '') + '" href="index.html">Start</a></li>' + '\n'
-				tmpMenu1 += '<li class="menu-item"><a class="menu-link' + (site == "gettingStarted.html" ? ' is-active' : '') + '" href="gettingStarted.html">Getting Started</a></li>' + '\n'
-			var	tmpMenu2 = ''
-			
-			for(var subitem in sites) {
-				var subSite		= sites[subitem][0];
-				var subTitle	= sites[subitem][1];
-			
-				if(subSite == "index.html" || subSite == "gettingStarted.html") 
-					continue
-
-				tmpMenu2 += '<li class="menu-item"><a class="menu-link' + (site == subSite ? ' is-active' : '') + '" href="' + subSite + '">' + subTitle+ '</a></li>' + '\n'
+		var allSites = {}
+		for(var menu in menus) {
+			var sites = menus[menu];
+			for(var item in sites) {
+				allSites[item] = menus[menu][item]; // create a array with all sites of all menus
 			}
-			
+		}
+
+
+		var layout = fs.readFileSync(htmlDir+"_layout.html", 'utf8'); // get template
+
+
+		for(var site in allSites) { // for each sites
+			var siteTitle = allSites[site];
+			var siteName = site.split('_')[0];
+			var siteType = site.split('_')[1];
+
+
+			console.log(siteName, siteType, siteTitle);
+			console.log("Processing %s", siteName)
+
+
 			// get content of file
-			var tmpContent = fs.readFileSync(htmlDir+site, 'utf8');
+			var content = fs.readFileSync(htmlDir+siteName, 'utf8');
 
-			// replace variables in template by content
-			var tmp = layout.replace( '{{title}}', title ).replace( '{{menu1}}', tmpMenu1 ).replace( '{{menu2}}', tmpMenu2 ).replace( '{{content}}', tmpContent )
+			// replace title and content variables in template
+			var tmp = layout.replace( '{{title}}', siteTitle ).replace( '{{content}}', content);
 
-			// write file in appengine/html
 
+			for(var menu in menus) { // for each menu
+				var menuName = menu.split('_')[0];
+				var menuType = menu.split('_')[1];
+				var sites = menus[menu];
+				var	tmpMenu = ''
+
+				if(menuType == 'sort')
+					sites = sortProperties(sites) // Sort sites by value alphabetically if suffix == sort
+				
+				for(var tmpSite in sites) { // for each site in this menu build menu item
+					var tmpSiteTitle = sites[tmpSite];
+					var tmpSiteName = tmpSite.split('_')[0];
+					var tmpSiteType = tmpSite.split('_')[1];
+					
+					tmpMenu += '<li class="menu-item ' + menuName + '-item"><a class="menu-link' + (tmpSiteType == 'Primary' ? ' is-primary' : '') + (siteName == tmpSiteName ? ' is-active' : '') + '" href="' + tmpSiteName + '">' + tmpSiteTitle+ '</a></li>' + '\n'
+				}
+
+				tmp = tmp.replace( '{{'+menuName+'}}', tmpMenu ) // replace menu variable by menu items
+			}
+
+
+			// create folder appengine/html if doesn't exists
 			if(!isThere(appengineDir)) {
 				mkdirp(appengineDir, function (err) {
-    				if (err) return console.error(err)
+					if (err) return console.error(err)
 				});
 			}
 			
-
-			fs.writeFile(appengineDir + site, tmp, function(err) {
+			// write file in appengine/html
+			fs.writeFile(appengineDir + siteName, tmp, function(err) {
 				if(err) return console.log(err);
 			}); 
 		}
+		
 	}
 };
 
@@ -67,18 +88,18 @@ function dirname(path) {
 }
 
 function sortProperties(obj) {
-  // convert object into array
-    var sortable=[];
-    for(var key in obj)
-        if(obj.hasOwnProperty(key))
-            sortable.push([key, obj[key]]); // each item is an array in format [key, value]
+	// convert object into array
+	var sortable=[];
+	for(var key in obj)
+		if(obj.hasOwnProperty(key))
+			sortable.push([key, obj[key]]); // each item is an array in format [key, value]
 
-    // sort items by value
-    sortable.sort(function(a, b)
-    {
-        var x=a[1].toLowerCase(),
-            y=b[1].toLowerCase();
-        return x<y ? -1 : x>y ? 1 : 0;
-    });
-    return sortable; // array in format [ [ key1, val1 ], [ key2, val2 ], ... ]
+	// sort items by value
+	sortable.sort(function(a, b)
+	{
+		var x=a[1].toLowerCase(),
+			y=b[1].toLowerCase();
+		return x<y ? -1 : x>y ? 1 : 0;
+	});
+	return sortable; // array in format [ [ key1, val1 ], [ key2, val2 ], ... ]
 }
