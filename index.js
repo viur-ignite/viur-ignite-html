@@ -34,7 +34,6 @@ module.exports = {
 			var siteType = site.split('_')[1];
 
 
-			console.log(siteName, siteType, siteTitle);
 			console.log("Processing %s", siteName)
 
 
