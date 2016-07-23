@@ -17,7 +17,7 @@ module.exports = {
 			dest: './appengine/html/'
 		};
 
-		if (typeof(options)==='undefined') options = {};
+		if (typeof(options)==='undefined') var options = {};
 		for (var key in defaultOptions) {
 			if (typeof(options[key])==='undefined') options[key] = defaultOptions[key];
 		}

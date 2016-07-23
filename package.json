@@ -1,31 +1,31 @@
 {
-	"name": "viur-ignite-html",
-	"version": "1.0.5",
-	"description": "Simple Template Render | Extension of viur-ignite-css",
-	"main": "index.js",
-	"scripts": {
-		"test": "\"echo Hello world\""
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/viur-ignite/viur-ignite-html.git"
-	},
-	"keywords": [
-		"VIUR Ignite",
-		"viur",
-		"ignite",
-		"html",
-		"template engine"
-	],
-	"author": "VIUR",
-	"license": "GPL-3.0",
-	"bugs": {
-		"url": "https://github.com/viur-ignite/viur-ignite-html/issues"
-	},
-	"homepage": "https://github.com/viur-ignite/viur-ignite-html#readme",
-	"dependencies": {
-		"node-fs": "latest",
-		"is-there": "latest",
-		"mkdirp": "latest"
-	}
+  "name": "viur-ignite-html",
+  "version": "1.0.6",
+  "description": "Simple Template Render | Extension of viur-ignite-css",
+  "main": "index.js",
+  "scripts": {
+    "test": "\"echo Hello world\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/viur-ignite/viur-ignite-html.git"
+  },
+  "keywords": [
+    "VIUR Ignite",
+    "viur",
+    "ignite",
+    "html",
+    "template engine"
+  ],
+  "author": "VIUR",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/viur-ignite/viur-ignite-html/issues"
+  },
+  "homepage": "https://github.com/viur-ignite/viur-ignite-html#readme",
+  "dependencies": {
+    "is-there": "^4.3.3",
+    "mkdirp": "^0.5.1",
+    "node-fs": "^0.1.7"
+  }
 }
