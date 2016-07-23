@@ -85,13 +85,21 @@ module.exports = {
 			if(!isThere(options.dest)) {
 				mkdirp(options.dest, function (err) {
 					if (err) return console.error(err);
+				
+					writeFiles()
 				});
+			} else {
+				writeFiles()
 			}
-			
-			// write file in destination folder
-			fs.writeFile(options.dest + siteName, tmp, function(err) {
-				if(err) return console.error(err);
-			}); 
+
+
+			// need function as callback to make sure that writing starts after create folder
+			function writeFiles() {
+				// write file in destination folder
+				fs.writeFile(options.dest + siteName, tmp, function(err) {
+					if(err) return console.error(err);
+				}); 
+			}
 		}
 
 		return true;

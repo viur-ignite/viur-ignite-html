@@ -1,6 +1,6 @@
 {
   "name": "viur-ignite-html",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Simple Template Render | Extension of viur-ignite-css",
   "main": "index.js",
   "scripts": {
