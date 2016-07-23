@@ -52,7 +52,7 @@ module.exports = {
 
 
 			// get content of file
-			var content = fs.readFileSync(htmlDir+siteName, 'utf8');
+			var content = fs.readFileSync(options.src+siteName, 'utf8');
 
 			// replace title and content variables in template
 			var tmp = layout.replace( '{{title}}', siteTitle ).replace( '{{content}}', content);
@@ -92,9 +92,9 @@ module.exports = {
 			fs.writeFile(options.dest + siteName, tmp, function(err) {
 				if(err) return console.error(err);
 			}); 
-
-			return true;
 		}
+
+		return true;
 	}
 };
 

@@ -1,7 +1,7 @@
 {
 	"name": "viur-ignite-html",
-	"version": "1.0.4",
-	"description": "Simple Template Engine | Extension of viur-ignite-css",
+	"version": "1.0.5",
+	"description": "Simple Template Render | Extension of viur-ignite-css",
 	"main": "index.js",
 	"scripts": {
 		"test": "\"echo Hello world\""
@@ -11,7 +11,7 @@
 		"url": "git+https://github.com/viur-ignite/viur-ignite-html.git"
 	},
 	"keywords": [
-		"VIUR Ignite"
+		"VIUR Ignite",
 		"viur",
 		"ignite",
 		"html",
@@ -23,7 +23,6 @@
 		"url": "https://github.com/viur-ignite/viur-ignite-html/issues"
 	},
 	"homepage": "https://github.com/viur-ignite/viur-ignite-html#readme",
-	"devDependencies": {},
 	"dependencies": {
 		"node-fs": "latest",
 		"is-there": "latest",
