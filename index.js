@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const PLUGIN_NAME = 'viur-ignite-html';
 
@@ -10,21 +10,20 @@ var path = require('path'),
 
 module.exports = {
 	build: function(options) {
-
 		// Set Default Options
 		var defaultOptions = {
 			src: './sources/html/',
 			dest: './appengine/html/'
 		};
 
-		if (typeof(options)==='undefined') var options = {};
+		if (typeof options === 'undefined') var options = {};
 		for (var key in defaultOptions) {
-			if (typeof(options[key])==='undefined') options[key] = defaultOptions[key];
+			if (typeof options[key] === 'undefined') options[key] = defaultOptions[key];
 		}
 
 
 		// Get menu(s) and parse as js dictionary
-		var	menus = fs.readFileSync(options.src+"_menu.json", 'utf8');
+		var	menus = fs.readFileSync(options.src + '_menu.json', 'utf8');
 			menus = JSON.parse(menus);
 
 
@@ -39,7 +38,7 @@ module.exports = {
 
 
 		// get template
-		var layout = fs.readFileSync(options.src+"_layout.html", 'utf8');
+		var layout = fs.readFileSync(options.src+'_layout.html', 'utf8');
 
 
 		for(var site in allSites) { // for each sites
@@ -48,14 +47,16 @@ module.exports = {
 			var siteType = site.split('_')[1];
 
 
-			console.log("Processing %s", siteName);
+			console.log('Processing %s', siteName);
 
 
 			// get content of file
-			var content = fs.readFileSync(options.src+siteName, 'utf8');
+			var content = fs.readFileSync(options.src + siteName, 'utf8');
 
 			// replace title and content variables in template
-			var tmp = layout.replace( '{{title}}', siteTitle ).replace( '{{content}}', content);
+			var tmp = layout
+				.replace( new RegExp('{{title}}', 'g'), siteTitle )
+				.replace( new RegExp('{{content}}', 'g'), content );
 
 
 			for(var menu in menus) { // for each menu
@@ -74,10 +75,12 @@ module.exports = {
 					var tmpSiteName = tmpSite.split('_')[0];
 					var tmpSiteType = tmpSite.split('_')[1];
 					
-					tmpMenu += '<li class="menu-item ' + menuName + '-item"><a class="menu-link' + (tmpSiteType == 'Primary' ? ' is-primary' : '') + (siteName == tmpSiteName ? ' is-active' : '') + '" href="' + tmpSiteName + '">' + tmpSiteTitle+ '</a></li>' + '\n';
+					tmpMenu += '<li class="menu-item ' + menuName + '-item">' +
+									'<a class="menu-link' + (tmpSiteType == 'Primary' ? ' is-primary' : '') + (siteName == tmpSiteName ? ' is-active' : '') + '" href="' + tmpSiteName + '">' + tmpSiteTitle+ '</a>'+
+								'</li>' + '\n';
 				}
 
-				tmp = tmp.replace( '{{'+menuName+'}}', tmpMenu ) // replace menu variable by menu items
+				tmp = tmp.replace( new RegExp('{{'+menuName+'}}', 'g'), tmpMenu ); // replace menu variable by menu items
 			}
 
 
@@ -86,10 +89,10 @@ module.exports = {
 				mkdirp(options.dest, function (err) {
 					if (err) return console.error(err);
 				
-					writeFiles()
+					writeFiles();
 				});
 			} else {
-				writeFiles()
+				writeFiles();
 			}
 
 
