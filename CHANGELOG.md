@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 nothing since last realease
 
 
-## [1.0.8] - 2016-08-05
+## [1.0.9] - 2016-08-05
 ### Fixed
 - no space between class and href attribute
 
