@@ -87,7 +87,7 @@ module.exports = {
 						tmpMenu += '<li class="menu-item ' + menuName + '-item">' +
 										'<a class="menu-link' + (tmpSiteType == 'Primary' ? ' is-primary' : '') +
 										(siteName == tmpSiteName ? ' is-active' : '') + '"' +
-										'href="' + tmpSiteName + '">' + tmpSiteTitle+ '</a>'+
+										' href="' + tmpSiteName + '">' + tmpSiteTitle+ '</a>'+
 									'</li>' + '\n';
 					}
 
