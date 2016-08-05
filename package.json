@@ -1,10 +1,10 @@
 {
   "name": "viur-ignite-html",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Simple Template Render | Extension of viur-ignite-css",
   "main": "index.js",
   "scripts": {
-    "test": "\"echo Hello world\""
+    "test": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -15,7 +15,9 @@
     "viur",
     "ignite",
     "html",
-    "template engine"
+    "template engine",
+    "gulp",
+    "❤"
   ],
   "author": "VIUR",
   "license": "GPL-3.0",
